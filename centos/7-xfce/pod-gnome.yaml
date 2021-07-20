@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: centos-gui
+spec:
+  containers:
+  - name: gui
+    image: nkkim/centos7-xfce
+    imagePullPolicy: Always
+    env:
+    - name: USER
+      value: test
+    - name: PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: secret-password
+          key: password
+    - name: ROOT
+      value: "no"
+    

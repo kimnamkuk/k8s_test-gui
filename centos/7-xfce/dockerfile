@@ -1,0 +1,17 @@
+FROM centos:7
+
+RUN yum update -y \ 
+	&& yum install epel-release -y \
+	&& yum groupinstall xfce -y
+
+RUN echo 'PREFERRED=/usr/bin/xfce4-session' > /etc/sysconfig/desktop
+RUN yum install xrdp xorgxrdp -y \
+	&& yum install sudo nload passwd nano -y
+
+COPY xrdp.ini /etc/xrdp/
+COPY startwm.sh /etc/xrdp/
+COPY entrypoint.sh /
+
+ENTRYPOINT ["/bin/sh", "-c"]
+CMD ["/entrypoint.sh"]
+
